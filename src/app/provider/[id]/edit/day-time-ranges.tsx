@@ -32,24 +32,33 @@ function DayTimeRanges({
 
   const handleDelete = (index: number) => {
     if (intervals.length === 1) {
+      setEmptyIntervals();
       setIsAvailable(false);
     } else {
-      if (index > 0) {
-        const nextRules = [...rules];
-        const nextRule = nextRules.find((rule) => rule.day === day);
-        const newIntervals = [
-          ...intervals.filter((interval, i) => i !== index - 1),
-        ];
-        if (nextRule) {
-          nextRule.intervals = newIntervals;
-        }
-        setRules(nextRules);
+      const nextRules = [...rules];
+      const nextRule = nextRules.find((rule) => rule.day === day);
+      const newIntervals = [...intervals.filter((interval, i) => i !== index)];
+      if (nextRule) {
+        nextRule.intervals = newIntervals;
       }
+      setRules(nextRules);
     }
   };
 
   const handleCheck = () => {
+    if (isAvailable) {
+      setEmptyIntervals();
+    }
     setIsAvailable((prev) => !prev);
+  };
+
+  const setEmptyIntervals = () => {
+    const nextRules = [...rules];
+    const nextRule = nextRules.find((rule) => rule.day === day);
+    if (nextRule) {
+      nextRule.intervals = [];
+    }
+    setRules(nextRules);
   };
 
   const handleAdd = () => {
