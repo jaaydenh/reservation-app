@@ -1,6 +1,9 @@
 ## Reservation App
 
-This is a frontend for a reservation app that allows users to book appointments with providers and allows providers to set their availability hours.
+This is a frontend for a reservation app that does the following:
+- Clients can schedule appointments with providers.
+- Providers can set their availability for appointments to be scheduled by clients.
+- Clients can list their reservations and confirm pending reservations.
 
 Built with [Next.js](https://nextjs.org/), [Material UI](https://mui.com/), and [Material UI NextJS](https://mui.com/guides/nextjs/).
 
@@ -41,9 +44,9 @@ Setting weekly availability rules follows this structure:
 }
 ```
 
-In the future this will allow for a type definition to dinstinguish between day and date based availability rules.
+In the future this will allow for type: "day" | "date" to dinstinguish between day and date based availability rules.
 
-The server would be resonsible for transforming this data into a simplied format that used by the frontend when displaying a provider's availability.
+The server would be responsible for transforming this data into a simplified format that is used by the frontend when displaying a provider's availability.
 
 ```json
 {
@@ -70,5 +73,5 @@ The app uses mock data from src/data
 
 ## Tradeoffs and Next Steps
 
-- Because of time constraints, providers are only to set per day availability that would persist for all weeks into the future. Ideally, providers would also be able to set date based availability using a calendar interface.
+- Because of dev time constraints, providers are only able to set per day availability that would persist for all weeks into the future. Ideally, providers would also be able to set date based availability using a calendar interface.
 - In the future, all times sent and received by the server should be in UTC and converted by the client to the user's timezone.
