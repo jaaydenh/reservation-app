@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Reservation App
+
+This is a frontend for a reservation app that allows users to book appointments with providers and allows providers to set their availability hours.
+
+Built with [Next.js](https://nextjs.org/), [Material UI](https://mui.com/), and [Material UI NextJS](https://mui.com/guides/nextjs/).
 
 ## Getting Started
 
-First, run the development server:
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Styling
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The app mostly uses Material UI for styling but ocassionally uses Tailwind CSS for some components.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Routes
 
-## Learn More
+- `/` - list providers
+- `/provider/:id` - list provider availability
+- `/provider/:id/edit` - edit provider availability
+- `/client/:id` - list client reservations
 
-To learn more about Next.js, take a look at the following resources:
+## Data Architecture
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Setting weekly availability rules follows this structure:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```json
+{
+  "rules": [
+    { "day": "Sun", "intervals": [{ "from": "09:00", "to": "17:00" }] },
+    { "day": "Mon", "intervals": [{ "from": "09:00", "to": "17:00" }] },
+    { "day": "Tue", "intervals": [{ "from": "09:00", "to": "17:00" }] },
+    { "day": "Wed", "intervals": [{ "from": "09:00", "to": "17:00" }] },
+    { "day": "Thu", "intervals": [{ "from": "09:00", "to": "17:00" }] },
+    { "day": "Fri", "intervals": [{ "from": "09:00", "to": "17:00" }] },
+    { "day": "Sat", "intervals": [{ "from": "09:00", "to": "17:00" }] }
+  ]
+}
+```
 
-## Deploy on Vercel
+In the future this will allow for a type definition to dinstinguish between day and date based availability rules.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The server would be resonsible for transforming this data into a simplied format that used by the frontend when displaying a provider's availability.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```json
+{
+  "id": 2,
+  "name": "Provider 1",
+  "availability_timezone": "America/New_York",
+  "days": [
+    {
+      "date": "2024-04-30",
+      "status": "available",
+      "slots": [
+        { "status": "available", "start_time": "2024-04-30T09:00:00-04:00" },
+        { "status": "available", "start_time": "2024-04-30T10:15:00-04:00" },
+        { "status": "available", "start_time": "2024-04-30T11:30:00-04:00" }
+      ]
+    }
+  ]
+}
+```
+
+## Mock Data
+
+The app uses mock data from src/data
+
+## Tradeoffs and Next Steps
+
+- Because of time constraints, providers are only to set per day availability that would persist for all weeks into the future. Ideally, providers would also be able to set date based availability using a calendar interface.
+- In the future, all times sent and received by the server should be in UTC and converted by the client to the user's timezone.

@@ -1,0 +1,39 @@
+[
+  {
+    "id": 1,
+    "name": "John Smith",
+    "email": "john@example.com",
+    "reservations": [
+      {
+        "providerId": 1,
+        "provider_name": "Provider 1",
+        "start_time": "2024-05-02T08:00:00-04:00",
+        "reserve_time": "2024-04-26T08:00:00-04:00",
+        "length": "15",
+        "status": "confirmed"
+      },
+      {
+        "providerId": 1,
+        "provider_name": "Provider 1",
+        "start_time": "2024-05-03T12:00:00-04:00",
+        "reserve_time": "2024-04-29T13:00:00-04:00",
+        "length": "15",
+        "status": "pending"
+      },
+      {
+        "providerId": 2,
+        "provider_name": "Provider 2",
+        "start_time": "2024-05-07T09:00:00-04:00",
+        "reserve_time": "2024-04-28T13:00:00-04:00",
+        "length": "15",
+        "status": "expired"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Frank Wilson",
+    "email": "frank@example.com",
+    "reservations": []
+  }
+]
